@@ -39,7 +39,11 @@ export default {
         "steel": "#417D9A",
         "steelbg": "#4C91B2",
         "water": "#4A90DA",
-        "waterbg": "#58ABF6"
+        "waterbg": "#58ABF6",
+        "white": "#ffffff",
+        "black": "#17171B",
+        "gray": "#747476",
+        "number": "#17171B99"
       }
     },
 	},
