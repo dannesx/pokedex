@@ -7,7 +7,7 @@ function Card({ pokemon }: { pokemon: Pokemon }) {
 	const sourceImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
 
 	return (
-		<div id={pokemon.name} className={`bg-${mainType}bg p-5 rounded-xl relative shadow`}>
+		<div id={pokemon.name} className={`bg-${mainType}bg p-5 rounded-xl relative shadow mb-8`}>
 			<h4 className="text-number">#{formatedID}</h4>
 			<h2 className="text-white capitalize mb-1">{pokemon.name}</h2>
 			<div className="inline-flex gap-2">
@@ -15,7 +15,9 @@ function Card({ pokemon }: { pokemon: Pokemon }) {
 					<Badge type={slot?.type.name} key={slot?.slot} />
 				))}
 			</div>
-			<img src={sourceImg} alt={pokemon.name} className='absolute max-w-36 bottom-2 right-2'/>
+			<img src={sourceImg} alt={pokemon.name} className='absolute max-w-36 bottom-1 right-1 z-50'/>
+			<img src="/assets/patterns/6x3.svg" alt="6x3 pattern" className='absolute top-2 left-24 w-24'/>
+			<img src="/assets/patterns/pokeball.svg" alt="pokeball pattern" className='absolute top-0 right-0 w-36'/>
 		</div>
 	)
 }

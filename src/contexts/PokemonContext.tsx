@@ -2,16 +2,16 @@ import { ReactNode, useState, createContext, useEffect } from 'react'
 import Pokemon from '../interfaces/Pokemon'
 
 interface PokemonContext {
-	pokemon: Pokemon
+	pokemons: Pokemon[]
 	loading: boolean
 }
 
 export const PokemonContext = createContext({} as PokemonContext)
 
 export function PokemonProvider({ children }: { children: ReactNode }) {
-	const [pokemon, setPokemon] = useState({} as Pokemon)
+	const [pokemons, setPokemons] = useState([] as Pokemon[])
 	const [loading, setLoading] = useState(true)
-	const url = 'https://pokeapi.co/api/v2/pokemon/1'
+	const url = 'https://pokeapi.co/api/v2/pokemon?limit=151'
 
 	useEffect(() => {
 		const fetchPokemon = async () => {
@@ -19,18 +19,28 @@ export function PokemonProvider({ children }: { children: ReactNode }) {
 			const json = await response.text()
 			const data = await JSON.parse(json)
 
-			setPokemon(data)
+			const promises = data.results.map(async (pokemon: { url: string }) => {
+				const response = await fetch(pokemon.url)
+				const json = await response.text()
+				const data = await JSON.parse(json)
+				return data
+			})
+
+			try {
+				const responses = await Promise.all(promises)
+				setPokemons([...responses])
+				setLoading(false)
+			} catch (error) {
+				console.error('Erro ao buscar Pokémon:', error)
+				// Trate o erro aqui, como exibir uma mensagem de erro
+			}
 		}
 
 		fetchPokemon()
 	}, [])
 
-	useEffect(() => {
-		pokemon.name ? setLoading(false) : setLoading(true)
-	}, [pokemon])
-
 	return (
-		<PokemonContext.Provider value={{ pokemon, loading }}>
+		<PokemonContext.Provider value={{ pokemons, loading }}>
 			{children}
 		</PokemonContext.Provider>
 	)
