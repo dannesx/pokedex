@@ -1,26 +1,40 @@
 function Loading() {
-  return (
-    <div>
-        <p>Loading ...</p>
-        <div className="bg-bugbg bg-bug invisible">a</div>
-        <div className="bg-darkbg bg-dark invisible">a</div>
-        <div className="bg-dragonbg bg-dragon invisible">a</div>
-        <div className="bg-electricbg bg-electric invisible">a</div>
-        <div className="bg-fairybg bg-fairy invisible">a</div>
-        <div className="bg-fightingbg bg-fighting invisible">a</div>
-        <div className="bg-firebg bg-fire invisible">a</div>
-        <div className="bg-flyingbg bg-flying invisible">a</div>
-        <div className="bg-ghostbg bg-ghost invisible">a</div>
-        <div className="bg-grassbg bg-grass invisible">a</div>
-        <div className="bg-groundbg bg-ground invisible">a</div>
-        <div className="bg-icebg bg-ice invisible">a</div>
-        <div className="bg-normalbg bg-normal invisible">a</div>
-        <div className="bg-poisonbg bg-poison invisible">a</div>
-        <div className="bg-psychicbg bg-psychic invisible">a</div>
-        <div className="bg-rockbg bg-rock invisible">a</div>
-        <div className="bg-steelbg bg-steel invisible">a</div>
-        <div className="bg-waterbg bg-water invisible">a</div>
-    </div>
-  )
+	return <div>Loading ...
+		<p className="bg-bug invisible">test</p>
+		<p className="bg-bugbg invisible">test</p>
+		<p className="bg-dark invisible">test</p>
+		<p className="bg-darkbg invisible">test</p>
+		<p className="bg-dragon invisible">test</p>
+		<p className="bg-dragonbg invisible">test</p>
+		<p className="bg-electric invisible">test</p>
+		<p className="bg-electricbg invisible">test</p>
+		<p className="bg-fairy invisible">test</p>
+		<p className="bg-fairybg invisible">test</p>
+		<p className="bg-fighting invisible">test</p>
+		<p className="bg-fightingbg invisible">test</p>
+		<p className="bg-fire invisible">test</p>
+		<p className="bg-firebg invisible">test</p>
+		<p className="bg-flying invisible">test</p>
+		<p className="bg-flyingbg invisible">test</p>
+		<p className="bg-ghost invisible">test</p>
+		<p className="bg-ghostbg invisible">test</p>
+		<p className="bg-grass invisible">test</p>
+		<p className="bg-grassbg invisible">test</p>
+		<p className="bg-ground invisible">test</p>
+		<p className="bg-ice invisible">test</p>
+		<p className="bg-icebg invisible">test</p>
+		<p className="bg-normal invisible">test</p>
+		<p className="bg-normalbg invisible">test</p>
+		<p className="bg-poison invisible">test</p>
+		<p className="bg-poisonbg invisible">test</p>
+		<p className="bg-psychic invisible">test</p>
+		<p className="bg-psychicbg invisible">test</p>
+		<p className="bg-rock invisible">test</p>
+		<p className="bg-rockbg invisible">test</p>
+		<p className="bg-steel invisible">test</p>
+		<p className="bg-steelbg invisible">test</p>
+		<p className="bg-water invisible">test</p>
+		<p className="bg-waterbg invisible">test</p>
+	</div>
 }
 export default Loading
