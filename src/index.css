@@ -15,13 +15,14 @@
 }
 
 @layer base {
-	*{
+	* {
 		box-sizing: border-box;
 	}
 
 	html {
 		font-family: 'SF Pro Display';
 		user-select: none;
+		scroll-behavior: smooth;
 	}
 
 	h1 {
