@@ -47,6 +47,15 @@ export default {
 				default_input: '#F2F2F2',
 				pressed_input: '#E2E2E2',
 			},
+			keyframes: {
+				fadeIn: {
+					'0%': { opacity: 0},
+					'100%': { opacity: 1}
+				}
+			},
+			animation: {
+				fadeIn: 'fadeIn 0.3s ease 0s 1 normal forwards;'
+			}
 		},
 	},
 	plugins: [],

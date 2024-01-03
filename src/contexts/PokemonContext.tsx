@@ -4,14 +4,18 @@ import Pokemon from '../interfaces/Pokemon'
 interface PokemonContext {
 	pokemons: Pokemon[]
 	loading: boolean
+	query: string
+	handleQuery: (data: string) => void
 }
 
 export const PokemonContext = createContext({} as PokemonContext)
 
 export function PokemonProvider({ children }: { children: ReactNode }) {
+	const [apiList, setApiList] = useState([] as Pokemon[])
 	const [pokemons, setPokemons] = useState([] as Pokemon[])
 	const [loading, setLoading] = useState(true)
-	const url = 'https://pokeapi.co/api/v2/pokemon?limit=151'
+	const [query, setQuery] = useState('')
+	const url = 'https://pokeapi.co/api/v2/pokemon?limit=494'
 
 	useEffect(() => {
 		const fetchPokemon = async () => {
@@ -29,6 +33,7 @@ export function PokemonProvider({ children }: { children: ReactNode }) {
 			try {
 				const responses = await Promise.all(promises)
 				setPokemons([...responses])
+				setApiList([...responses])
 				setLoading(false)
 			} catch (error) {
 				console.error('Erro ao buscar Pokémon:', error)
@@ -39,8 +44,26 @@ export function PokemonProvider({ children }: { children: ReactNode }) {
 		fetchPokemon()
 	}, [])
 
+	useEffect(() => {
+		if (query) {
+			const search = apiList.filter(
+				item =>
+					item.name.toLowerCase().includes(query) ||
+					item.id.toString() == query
+			)
+			setPokemons(search)
+		} else {
+			setPokemons(apiList)
+		}
+	}, [query, apiList])
+
+	const handleQuery = (data: string) => {
+		setQuery(data)
+		console.log(data)
+	}
+
 	return (
-		<PokemonContext.Provider value={{ pokemons, loading }}>
+		<PokemonContext.Provider value={{ pokemons, loading, query, handleQuery }}>
 			{children}
 		</PokemonContext.Provider>
 	)

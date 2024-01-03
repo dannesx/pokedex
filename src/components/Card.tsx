@@ -7,7 +7,7 @@ function Card({ pokemon }: { pokemon: Pokemon }) {
 	const sourceImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
 
 	return (
-		<div id={pokemon.name} className={`bg-${mainType}bg p-4 rounded-xl relative shadow-lg mb-8`}>
+		<div id={pokemon.name} className={`bg-${mainType}bg p-4 rounded-xl relative shadow-lg mb-8 animate-fadeIn`}>
 			<h4 className="text-number">#{formatedID}</h4>
 			<h2 className="text-white capitalize mb-1">{pokemon.name}</h2>
 			<div className="inline-flex gap-2">

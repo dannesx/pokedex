@@ -16,8 +16,10 @@ function Home() {
 			<Header />
 			{loading ? (
 				<Loading />
-			) : (
+			) : pokemons.length ? (
 				pokemons.map(pokemon => <Card pokemon={pokemon} key={pokemon.id} />)
+			) : (
+				<p className="text-center text-gray">Pókemon not found 😢</p>
 			)}
 		</section>
 	)

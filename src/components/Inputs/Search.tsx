@@ -1,4 +1,8 @@
+import { useContext } from 'react'
+import { PokemonContext } from '../../contexts/PokemonContext'
+
 function Search() {
+	const { handleQuery } = useContext(PokemonContext)
 	return (
 		<div className="relative">
 			<input
@@ -7,6 +11,7 @@ function Search() {
 				id="search"
 				placeholder="What Pokémon are you looking for?"
 				className="w-full px-6 py-5 pl-14 bg-default_input rounded-lg focus:bg-pressed_input"
+				onChange={e => handleQuery(e.target.value.toLowerCase())}
 			/>
 			<img
 				src="/assets/icons/search.svg"
