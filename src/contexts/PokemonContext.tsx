@@ -1,56 +1,39 @@
-import { ReactNode, useState, createContext, useEffect } from 'react'
+import { ReactNode, useState, createContext, useEffect, useRef } from 'react'
 import Pokemon from '../interfaces/Pokemon'
 
 interface PokemonContext {
 	pokemons: Pokemon[]
+	pokemon: Pokemon
 	loading: boolean
 	query: string
+	id: number
 	handleQuery: (data: string) => void
 	nextPagination: () => void
+	selectPokemon: (id: number) => void
 }
 
 export const PokemonContext = createContext({} as PokemonContext)
 
 export function PokemonProvider({ children }: { children: ReactNode }) {
-	const [apiList, setApiList] = useState([] as Pokemon[])
-	const [pokemons, setPokemons] = useState([] as Pokemon[])
+	const [apiList, setApiList] = useState<Pokemon[]>([])
+	const [pokemons, setPokemons] = useState<Pokemon[]>([])
+	const [pokemon, setPokemon] = useState<Pokemon>({} as Pokemon)
 	const [loading, setLoading] = useState(true)
+	const [id, setId] = useState(1)
 	const [query, setQuery] = useState('')
-	const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon')
-	const [nextUrl, setNextUrl] = useState('')
-	const [fetchTimes, setFetchTimes] = useState(0)
+	const apiUrl = useRef('https://pokeapi.co/api/v2/pokemon')
+	const count = useRef(0)
 
 	useEffect(() => {
-		const fetchPokemon = async () => {
-			const response = await fetch(url)
-			const json = await response.text()
-			const data = await JSON.parse(json)
+		const interval = setInterval(() => {
+			fetchPokemon(apiUrl.current)
+			if (apiList.length == count.current) clearInterval(interval)
+		}, 500)
 
-			setNextUrl(data.next)
+		fetchPokemon(apiUrl.current)
 
-			const promises = data.results.map(async (pokemon: { url: string }) => {
-				const response = await fetch(pokemon.url)
-				const json = await response.text()
-				const data = await JSON.parse(json)
-				return data
-			})
-
-			try {
-				const responses = await Promise.all(promises)
-				setPokemons(prev => [...prev, ...responses])
-				setApiList(prev => [...prev, ...responses])
-				setLoading(false)
-			} catch (error) {
-				console.error('Erro ao buscar Pokémon:', error)
-				// Trate o erro aqui, como exibir uma mensagem de erro
-			}
-		}
-		if (fetchTimes == 0) {
-			setFetchTimes(prev => prev + 1)
-			return
-		}
-		fetchPokemon()
-	}, [url, fetchTimes])
+		return () => clearInterval(interval)
+	}, [])
 
 	useEffect(() => {
 		if (query) {
@@ -64,18 +47,62 @@ export function PokemonProvider({ children }: { children: ReactNode }) {
 		}
 	}, [query, apiList])
 
+	useEffect(() => {
+		const selectedPokemon = apiList.filter(pokemon => id === pokemon.id).pop()
+
+		if (selectedPokemon) setPokemon(selectedPokemon)
+		else setPokemon(apiList[0])
+	}, [id, apiList])
+
+	const fetchPokemon = async (url: string) => {
+		const response = await fetch(url)
+		const json = await response.text()
+		const data = await JSON.parse(json)
+
+		apiUrl.current = data.next
+		count.current = data.count
+
+		const promises = data.results.map(async (pokemon: { url: string }) => {
+			const response = await fetch(pokemon.url)
+			const json = await response.text()
+			const data = await JSON.parse(json)
+			return data
+		})
+
+		try {
+			const responses = await Promise.all(promises)
+			setApiList(prev => [...prev, ...responses])
+			setLoading(false)
+		} catch (error) {
+			console.error('Erro ao buscar Pokémon:', error)
+		}
+	}
+
 	const handleQuery = (data: string) => {
 		setQuery(data)
 		console.log(data)
 	}
 
 	const nextPagination = () => {
-		setUrl(nextUrl)
+		console.log('Next Page')
+	}
+
+	const selectPokemon = (id: number) => {
+		setId(id)
 	}
 
 	return (
 		<PokemonContext.Provider
-			value={{ pokemons, loading, query, handleQuery, nextPagination }}
+			value={{
+				pokemons,
+				pokemon,
+				loading,
+				query,
+				id,
+				handleQuery,
+				nextPagination,
+				selectPokemon,
+			}}
 		>
 			{children}
 		</PokemonContext.Provider>

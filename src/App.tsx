@@ -1,10 +1,14 @@
-import { Home } from './pages'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Home, Profile } from './pages'
 
 function App() {
 	return (
-		<main className="p-8">
-			<Home />
-		</main>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/profile" element={<Profile />} />
+			</Routes>
+		</BrowserRouter>
 	)
 }
 export default App

@@ -7,7 +7,7 @@ import TopPage from '../components/TopPage'
 
 function Home() {
 	const [scrolled, setScrolled] = useState(false)
-	const { pokemons, loading, nextPagination, query } =
+	const { pokemons, loading, query, nextPagination } =
 		useContext(PokemonContext)
 
 	useEffect(() => {
@@ -33,7 +33,7 @@ function Home() {
 	}, [])
 
 	return (
-		<section className="relative">
+		<main className="relative p-8">
 			<img
 				src="/assets/patterns/pokeball.svg"
 				alt="pokeball"
@@ -49,7 +49,7 @@ function Home() {
 			)}
 			<div className="invisible" id="flag"></div>
 			{scrolled ? <TopPage /> : null}
-		</section>
+		</main>
 	)
 }
 export default Home
