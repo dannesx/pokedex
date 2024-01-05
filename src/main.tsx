@@ -5,9 +5,9 @@ import './index.css'
 import { PokemonProvider } from './contexts/PokemonContext.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-	// <React.StrictMode>
+	<React.StrictMode>
 		<PokemonProvider>
 			<App />
 		</PokemonProvider>
-	// </React.StrictMode>
+	</React.StrictMode>
 )
